@@ -1,0 +1,79 @@
+﻿@model GadgetStore.Models.Gadget
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Gadget</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Count" class="control-label"></label>
+                <input asp-for="Count" class="form-control" />
+                <span asp-validation-for="Count" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Memory" class="control-label"></label>
+                <input asp-for="Memory" class="form-control" />
+                <span asp-validation-for="Memory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RAM" class="control-label"></label>
+                <input asp-for="RAM" class="form-control" />
+                <span asp-validation-for="RAM" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GadgetTypeId" class="control-label"></label>
+                <select asp-for="GadgetTypeId" class="form-control" asp-items="ViewBag.GadgetTypeId"></select>
+                <span asp-validation-for="GadgetTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiagonalId" class="control-label"></label>
+                <select asp-for="DiagonalId" class="form-control" asp-items="ViewBag.DiagonalId"></select>
+                <span asp-validation-for="DiagonalId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScreenResolutionId" class="control-label"></label>
+                <select asp-for="ScreenResolutionId" class="form-control" asp-items="ViewBag.ScreenResolutionId"></select>
+                <span asp-validation-for="ScreenResolutionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ColorId" class="control-label"></label>
+                <select asp-for="ColorId" class="form-control" asp-items="ViewBag.Colorid"></select>
+                <span asp-validation-for="ColorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CPUId" class="control-label"></label>
+                <select asp-for="CPUId" class="form-control" asp-items="ViewBag.CPUId"></select>
+                <span asp-validation-for="CPUId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManufacturerId" class="control-label"></label>
+                <select asp-for="ManufacturerId" class="form-control" asp-items="ViewBag.ManufacturerId"></select>
+                <span asp-validation-for="ManufacturerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

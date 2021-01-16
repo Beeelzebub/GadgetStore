@@ -1,0 +1,55 @@
+﻿@model GadgetStore.Models.Cart
+
+@if (Model == null)
+{
+    <span>Ваша корзина пуста</span>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Товар
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Lines())
+            {
+                <tr>
+                    <td>
+                        @item.Gadget.Name
+                    </td>
+                    <td>
+                        @item.Count x @item.Gadget.Price
+                    </td>
+                    <td>
+                        <a asp-action="Remove" asp-route-id="@item.Gadget.Id">Убрать</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="text-right">
+                    Итого:
+                </td>
+                <td>
+                    @Model.GetSum()
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="row justify-content-center">
+        <a type="button" asp-controller="MyCart" asp-action="Delivery" class="btn btn-success"> Оплатить </a>
+    </div>
+
+}

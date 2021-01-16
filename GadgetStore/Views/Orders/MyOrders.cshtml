@@ -1,0 +1,57 @@
+﻿@model IEnumerable<GadgetStore.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h5 class="display-4 pb-3">Ваши заказы</h5>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Номер заказа
+            </th>
+            <th>
+                Товар
+            </th>
+            <th>
+                Дата заказа
+            </th>
+            <th>
+                Состояние
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @foreach(CartLine cart in item.GetCartObject().Lines())
+                    {
+                        <p>@cart.Count x @cart.Gadget.Name</p>
+                    }
+                </td>
+                <td>
+                    @item.StartDate
+                </td>
+                <td>
+                    @item.OrderStatus.Name
+                </td>
+                <td>
+                    @if (item.OrderStatusId == 2)
+                    {
+                        <a class="btn btn-sm btn-info" asp-action="Delete" asp-route-id="@item.Id">Подтвердить получение</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

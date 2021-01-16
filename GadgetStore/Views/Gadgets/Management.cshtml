@@ -1,0 +1,89 @@
+﻿@model IEnumerable<GadgetStore.Models.Gadget>
+
+@{
+    ViewData["Title"] = "Management";
+}
+
+<h1>Management</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Count)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Memory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RAM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GadgetType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diagonal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScreenResolution)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CPU)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Manufacturer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Memory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RAM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GadgetType.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagonal.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScreenResolution.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CPU.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

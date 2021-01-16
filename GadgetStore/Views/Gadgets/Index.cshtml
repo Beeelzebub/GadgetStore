@@ -1,0 +1,108 @@
+﻿@model IEnumerable<GadgetStore.Models.Gadget>
+
+
+<div class="input-group mb-4">
+    <input type="search" placeholder="Введите название товара" aria-describedby="button-addon5" class="form-control">
+    <div class="input-group-append">
+        <button id="button-addon5" type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+    </div>
+</div>
+<div class="container row">
+    <div class="col-3 pl-0">
+        <p class="font-weight-normal text-center h4 mb-3">Фильтр</p>
+        
+        <form asp-action="">
+            <div class="form-group">
+                <label class="control-label font-weight-light mb-0"> Тип гаджета </label>
+                <select name="GadgetType" class="form-control form-control-sm" asp-items="ViewBag.GadgetTypes"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label font-weight-light mb-0"> Производитель </label>
+                <select name="Manufacturer" class="form-control form-control-sm" asp-items="ViewBag.Manufacturers"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label font-weight-light mb-0"> Диагональ </label>
+                <select name="Diagonal" class="form-control form-control-sm" asp-items="ViewBag.Diagonals"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label font-weight-light mb-0"> Разрешение </label>
+                <select name="ScreenResolution" class="form-control form-control-sm" asp-items="ViewBag.ScreenResolutions"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label font-weight-light mb-0"> Цвет </label>
+                <select name="Color" class="form-control form-control-sm" asp-items="ViewBag.Colors"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label font-weight-light mb-0"> Процессор </label>
+                <select name="CPU" class="form-control form-control-sm" asp-items="ViewBag.CPUs"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label font-weight-light mb-0"> Флэш-память </label>
+                <select name="Memory" class="form-control form-control-sm" asp-items="ViewBag.Memory"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label font-weight-light mb-0"> Оперативная память </label>
+                <select name="RAM" class="form-control form-control-sm" asp-items="ViewBag.RAM"></select>
+            </div>
+
+
+            <div class="form-group row pt-3 justify-content-center">
+                <input type="submit" value="Применить" class="btn btn-sm btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div class="col pt-5">
+        @foreach (var item in Model)
+        {
+            <div class="row well offset-md-1 pb-5">
+                <div class="col-3 row justify-content-center">
+                    @if (item.Picture.Image != null)
+                    {
+                        <img style='width:135px; height:220px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Picture.Image))" />
+                    }
+                </div>
+                <div class="col-6">
+                    <strong>@item.GadgetType.Name @item.Name</strong> <br/>
+                    <span class="">Производитель: @item.Manufacturer.Name </span> <br />
+                    <span>Год: @item.Year </span> <br />
+                    <span>Флэш-память: @item.Memory </span> <br />
+                    <span>ОЗУ: @item.RAM </span> <br />
+                    <span>Процессов: @item.CPU.Name </span> <br />
+                    <span>Диагональ экрана: @item.Diagonal.Value </span> <br />
+                    <span>Разрешение экрана: @item.ScreenResolution.Value </span> <br />
+                    <span>Цвет корпуса: @item.Color.Name </span> <br />
+                </div>
+                <div class="col-3">
+                    @if (item.Count < 1)
+                    {
+                        <span class="text-danger text-center">Нет в наличии</span>
+                    }
+                    else
+                    {   
+                        <strong class="text-center">@item.Price р. </strong> <br />
+                        <a class="btn btn-sm btn-success align-self-center"
+                           onclick="putInCart(@item.Id)">
+                            В корзину
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+        
+    </div>
+</div>
+
+<div class="modal text-center fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 id="modal-info">Modal Body</h3>
+            </div>
+            <div class="modal-footer">
+                <div class="container-fluid">
+                    <button type="button" class="btn btn-block btn-default" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

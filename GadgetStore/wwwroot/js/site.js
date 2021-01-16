@@ -1,4 +1,24 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function putInCart(id)
+{
+   /* $.ajax({
+        method: 'GET',
+        url: 'MyCart/Add',
+        dataType: 'HTML',
+        data: { 'Id': id },
+        success: (data) => {
+                
+                $('#modal-info').html(data);
+                $('#smallModal').modal({
+                    show: true
+                });
+            }
+    });
+    */
 
-// Write your JavaScript code.
+    $.get('MyCart/Add', { Id: id }, function(data) {
+        $('#modal-info').html(data);
+        $('#smallModal').modal({
+            show: true
+        });
+    });
+}

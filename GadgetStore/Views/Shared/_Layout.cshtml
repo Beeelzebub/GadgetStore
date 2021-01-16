@@ -4,14 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GadgetStore</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GadgetStore</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> <i class="fa fa-mobile"></i> GadgetStore</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,16 +20,73 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Gadgets" asp-action="Index">Магазин</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Контакты</a>
+                        </li>
+
+                        @{
+                            if (User.IsInRole("admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index"> Управление </a>
+                                </li>
+                            }
+                            else if (User.IsInRole("seller"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Gadgets" asp-action="Index"> Управление </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link pr-2 text-dark" asp-area="" asp-controller="Orders" asp-action="MyOrders"><i class="fa fa-truck"> </i> Заказы</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a asp-controller="MyCart" asp-action="Index" class="nav-link pr-3 text-dark"><i class="fa fa-shopping-cart"></i> Корзина</a>
+                            </li>
+                            <li class="navbar-item">
+                                <span class="navbar-text text-dark"><i class="fa fa-user"></i> @User.Identity.Name /</span>
+                            </li>
+                            <li class="navbar-item">
+                                <form method="post" asp-controller="Account" asp-action="Logout">
+                                    <button class="btn btn-link nav-link pl-1"> Выход </button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="navbar-item">
+                                <a asp-controller="Account" asp-action="Login">
+                                    <button class="btn btn-outline-primary my-2 my-sm-0">Вход</button>
+                                </a>
+                            </li>
+                            <li class="navbar-item">
+                                <a asp-controller="Account" asp-action="Register" class="nav-link">Нет аккаунта?</a>
+                            </li>
+
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
+    <div class="text-center logo">
+        <h1 class="display-4">GadgetStore</h1>
+        <h5 class="h5">Онлайн магазин гаджетов</h5>
+    </div>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -37,11 +95,11 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - GadgetStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - GadgetStore
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
