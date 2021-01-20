@@ -1,4 +1,4 @@
-﻿@model GadgetStore.Models.Gadget
+﻿@model GadgetStore.ViewModels.GadgetViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -10,9 +10,18 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="Id" value="@ViewBag.Id" />
+            <div class="form-group">
+                <label asp-for="GadgetTypeId" class="control-label"></label>
+                <select asp-for="GadgetTypeId" class="form-control" asp-items="ViewBag.GadgetTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Year" class="control-label"></label>
                 <input asp-for="Year" class="form-control" />
@@ -34,35 +43,40 @@
                 <span asp-validation-for="RAM" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GadgetTypeId" class="control-label"></label>
-                <select asp-for="GadgetTypeId" class="form-control" asp-items="ViewBag.GadgetTypeId"></select>
-                <span asp-validation-for="GadgetTypeId" class="text-danger"></span>
+                <label asp-for="Diagonal" class="control-label"></label>
+                <input asp-for="Diagonal" list="Diagonals" class="form-control" />
+                <span asp-validation-for="Diagonal" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DiagonalId" class="control-label"></label>
-                <select asp-for="DiagonalId" class="form-control" asp-items="ViewBag.DiagonalId"></select>
-                <span asp-validation-for="DiagonalId" class="text-danger"></span>
+                <label asp-for="ScreenResolution" class="control-label"></label>
+                <input asp-for="ScreenResolution" list="ScreenResolutions" class="form-control" />
+                <span asp-validation-for="ScreenResolution" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ScreenResolutionId" class="control-label"></label>
-                <select asp-for="ScreenResolutionId" class="form-control" asp-items="ViewBag.ScreenResolutionId"></select>
-                <span asp-validation-for="ScreenResolutionId" class="text-danger"></span>
+                <label asp-for="Color" class="control-label"></label>
+                <input asp-for="Color" list="Colors" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ColorId" class="control-label"></label>
-                <select asp-for="ColorId" class="form-control" asp-items="ViewBag.Colorid"></select>
-                <span asp-validation-for="ColorId" class="text-danger"></span>
+                <label asp-for="CPU" class="control-label"></label>
+                <input asp-for="CPU" list="CPUs" class="form-control" />
+                <span asp-validation-for="CPU" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CPUId" class="control-label"></label>
-                <select asp-for="CPUId" class="form-control" asp-items="ViewBag.CPUId"></select>
-                <span asp-validation-for="CPUId" class="text-danger"></span>
+                <label asp-for="Manufacturer" class="control-label"></label>
+                <input asp-for="Manufacturer" list="Manufacturers" class="form-control" />
+                <span asp-validation-for="Manufacturer" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ManufacturerId" class="control-label"></label>
-                <select asp-for="ManufacturerId" class="form-control" asp-items="ViewBag.ManufacturerId"></select>
-                <span asp-validation-for="ManufacturerId" class="text-danger"></span>
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label">Изображение</label>
+                <input name="Image" type="file" class="form-control" />
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -73,6 +87,51 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<datalist id="Manufacturers">
+    @{
+        foreach (var item in ViewBag.Manufacturers)
+        {
+            <option value="@item"></option>
+        }
+    }
+</datalist>
+
+<datalist id="Diagonals">
+    @{
+        foreach (var item in ViewBag.Diagonals)
+        {
+            <option value="@item"></option>
+        }
+    }
+</datalist>
+
+<datalist id="ScreenResolutions">
+    @{
+        foreach (var item in ViewBag.ScreenResolutions)
+        {
+            <option value="@item"></option>
+        }
+    }
+</datalist>
+
+<datalist id="Colors">
+    @{
+        foreach (var item in ViewBag.Colors)
+        {
+            <option value="@item"></option>
+        }
+    }
+</datalist>
+
+<datalist id="CPUs">
+    @{
+        foreach (var item in ViewBag.CPUs)
+        {
+            <option value="@item"></option>
+        }
+    }
+</datalist>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

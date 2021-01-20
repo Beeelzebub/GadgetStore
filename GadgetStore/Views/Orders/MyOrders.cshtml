@@ -40,7 +40,7 @@
                     }
                 </td>
                 <td>
-                    @item.StartDate
+                    @item.StartDate.ToShortDateString()
                 </td>
                 <td>
                     @item.OrderStatus.Name
@@ -48,7 +48,7 @@
                 <td>
                     @if (item.OrderStatusId == 2)
                     {
-                        <a class="btn btn-sm btn-info" asp-action="Delete" asp-route-id="@item.Id">Подтвердить получение</a>
+                        <a class="btn btn-sm btn-info" asp-action="OrderArrived" asp-route-id="@item.Id">Подтвердить получение</a>
                     }
                 </td>
             </tr>

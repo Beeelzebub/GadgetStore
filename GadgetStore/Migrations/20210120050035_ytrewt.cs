@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GadgetStore.Migrations
 {
-    public partial class new3 : Migration
+    public partial class ytrewt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,16 +40,30 @@ namespace GadgetStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carts",
+                name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalCost = table.Column<float>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    SecondName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carts", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,41 +193,6 @@ namespace GadgetStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Balance = table.Column<float>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    SecondName = table.Column<string>(nullable: true),
-                    CartId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -309,7 +288,8 @@ namespace GadgetStore.Migrations
                     SellerId = table.Column<string>(nullable: true),
                     CustomerId = table.Column<string>(nullable: true),
                     StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false)
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    Cart = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -358,9 +338,7 @@ namespace GadgetStore.Migrations
                     ScreenResolutionId = table.Column<int>(nullable: false),
                     ColorId = table.Column<int>(nullable: false),
                     CPUId = table.Column<int>(nullable: false),
-                    ManufacturerId = table.Column<int>(nullable: false),
-                    CartId = table.Column<int>(nullable: true),
-                    OrderId = table.Column<int>(nullable: true)
+                    ManufacturerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -371,12 +349,6 @@ namespace GadgetStore.Migrations
                         principalTable: "CPUs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Gadgets_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Gadgets_Colors_ColorId",
                         column: x => x.ColorId,
@@ -401,12 +373,6 @@ namespace GadgetStore.Migrations
                         principalTable: "Manufacturers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Gadgets_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Gadgets_Pictures_PictureId",
                         column: x => x.PictureId,
@@ -468,11 +434,6 @@ namespace GadgetStore.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_CartId",
-                table: "AspNetUsers",
-                column: "CartId");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -488,11 +449,6 @@ namespace GadgetStore.Migrations
                 name: "IX_Gadgets_CPUId",
                 table: "Gadgets",
                 column: "CPUId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Gadgets_CartId",
-                table: "Gadgets",
-                column: "CartId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Gadgets_ColorId",
@@ -513,11 +469,6 @@ namespace GadgetStore.Migrations
                 name: "IX_Gadgets_ManufacturerId",
                 table: "Gadgets",
                 column: "ManufacturerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Gadgets_OrderId",
-                table: "Gadgets",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Gadgets_PictureId",
@@ -571,6 +522,9 @@ namespace GadgetStore.Migrations
                 name: "Gadgets");
 
             migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -589,9 +543,6 @@ namespace GadgetStore.Migrations
                 name: "Manufacturers");
 
             migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
                 name: "Pictures");
 
             migrationBuilder.DropTable(
@@ -605,9 +556,6 @@ namespace GadgetStore.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderStatuses");
-
-            migrationBuilder.DropTable(
-                name: "Carts");
         }
     }
 }

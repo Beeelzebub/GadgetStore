@@ -37,8 +37,7 @@ namespace GadgetStore.Controllers
                 {
                     UserName = model.UserName,
                     FirstName = model.FirstName,
-                    SecondName = model.SecondName,
-                    Balance = 0
+                    SecondName = model.SecondName
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);

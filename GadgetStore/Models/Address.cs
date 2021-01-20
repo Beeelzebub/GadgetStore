@@ -15,5 +15,20 @@ namespace GadgetStore.Models
         public int? Porch { get; set; }
         public int? Apartment { get; set; }
 
+        public override string ToString()
+        {
+            string addressString = City + ", " + Street + ", " + Hous;
+            if (Porch != null)
+            {
+                addressString += ", " + Porch;
+            }
+            if (Apartment != null)
+            {
+                addressString += ", " + Apartment;
+            }
+
+            return addressString;
+        }
+
     }
 }

@@ -112,7 +112,7 @@ namespace GadgetStore.Controllers
 
             await _context.SaveChangesAsync();
 
-            HttpContext.Session.Set<Cart>("cart", new Cart());
+            HttpContext.Session.Set<Cart>("cart", null);
 
             return View("PayInfo", order.Id);
         }
@@ -150,6 +150,7 @@ namespace GadgetStore.Controllers
             if (gadget != null)
             {
                 cart.RemoveItem(gadget);
+                //доделать
                 HttpContext.Session.Set<Cart>("cart", cart);
             }
             

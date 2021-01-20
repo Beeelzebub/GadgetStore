@@ -29,6 +29,7 @@ a {
 html {
   font-size: 14px;
 }
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -59,20 +60,27 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background: linear-gradient(90deg, #69b7eb, #b3dbd3, #f4d6db);
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    background-color: rgb(255,255,255, 0.62);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }
 
 .logo {
-    padding-top: 60px ;
-    padding-bottom: 60px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.nondecoration {
+    text-decoration: none !important;
 }
 
 .google {
@@ -133,4 +141,43 @@ body {
     border-color: #c8ced3 !important;
     outline: 0;
     box-shadow: 0 0 0 #F44336
+}
+
+.content {
+    background-color: rgb(255,255,255, 0.4);
+    border-radius: 20px;
+}
+
+.my-btn {
+    background: #7ab1cb !important;
+    color: white !important;
+    border-radius: 5px;
+}
+
+.buy-btn {
+    background: #0d9bf4;
+    color: white !important;
+}
+
+.smoth-border {
+    border-radius: 8px;
+}
+
+.modal-borders {
+    border-radius: 20px;
+}
+
+table {
+    background-color: rgb(255,255,255, 0.4);
+    border-radius:20px;
+    text-align: center;
+    border: hidden !important;
+}
+
+.modal-text {
+    color: #0d9bf4;
+}
+
+.action-icon {
+    font-size: 24px;
 }

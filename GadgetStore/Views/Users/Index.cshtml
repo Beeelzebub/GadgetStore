@@ -1,0 +1,23 @@
+﻿@model IEnumerable<GadgetStore.Models.User>
+@{
+    ViewBag.Title = "Список пользователей";
+}
+
+<a asp-action="Create"><i class="fa fa-plus nondecoration"></i>Добавить пользователя</a>
+
+<table class="table">
+    <tr><th>Логин</th><th>Имя и Фамилия</th><th></th></tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>@user.FirstName @user.SecondName</td>
+            <td>
+                <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                    <a title="редактировать" class="text-dark nondecoration" asp-action="Edit" asp-route-id="@user.Id"><i class="fa fa-pencil action-icon"></i></a>
+                    <a title="удалить" class="text-dark nondecoration" asp-action="Delete" asp-route-id="@user.Id"><i class="fa fa-trash action-icon"></i></a>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

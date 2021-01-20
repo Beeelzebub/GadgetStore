@@ -11,9 +11,6 @@ namespace GadgetStore
     {
         public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            string adminLogin = "admin";
-            string password = "admin";
-
             if (await roleManager.FindByNameAsync("admin") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("admin"));
@@ -26,15 +23,28 @@ namespace GadgetStore
             {
                 await roleManager.CreateAsync(new IdentityRole("seller"));
             }
-            if (await userManager.FindByNameAsync(adminLogin) == null)
+            if (await userManager.FindByNameAsync("admin") == null)
             {
-                User admin = new User { UserName = adminLogin, FirstName = adminLogin, SecondName = adminLogin, Balance = 0};
-                IdentityResult result = await userManager.CreateAsync(admin, password);
+                User admin = new User { UserName = "admin", FirstName = "admin", SecondName = "admin" };
+                IdentityResult result = await userManager.CreateAsync(admin, "admin");
                 if (result.Succeeded)   
                 {
                     await userManager.AddToRoleAsync(admin, "admin");
                 }
+
+                
             }
+            if (await userManager.FindByNameAsync("unknow") == null)
+            {
+                User unknow = new User { UserName = "unknow", FirstName = "пользователь", SecondName = "удален" };
+                IdentityResult result = await userManager.CreateAsync(unknow, "unknow");
+
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(unknow, "customer");
+                }
+            }
+
         }
     }
 }

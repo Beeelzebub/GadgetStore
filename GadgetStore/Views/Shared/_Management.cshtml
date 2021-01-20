@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+
+<h1 class="text-center mb-2">Управление</h1>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+
+        <p class="mb-4">
+            <a asp-controller="Orders" asp-action="ActiveOrders" class="btn btn-link nondecoration p-0" >Активные заказы</a>
+            <span>/</span>
+            <a asp-controller="Orders" asp-action="History" class="btn btn-link nondecoration p-0" >История заказов</a>
+            <span>/</span>
+            <a asp-controller="Gadgets" asp-action="Management" class="btn btn-link nondecoration p-0" >Товары</a>
+        </p>
+
+         @RenderBody()
+
+    </div>
+</div>

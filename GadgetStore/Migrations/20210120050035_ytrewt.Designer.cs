@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GadgetStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210115155145_new3")]
-    partial class new3
+    [Migration("20210120050035_ytrewt")]
+    partial class ytrewt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,21 +66,6 @@ namespace GadgetStore.Migrations
                     b.ToTable("CPUs");
                 });
 
-            modelBuilder.Entity("GadgetStore.Models.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<float>("TotalCost")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Carts");
-                });
-
             modelBuilder.Entity("GadgetStore.Models.Color", b =>
                 {
                     b.Property<int>("Id")
@@ -121,9 +106,6 @@ namespace GadgetStore.Migrations
                     b.Property<int>("CPUId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ColorId")
                         .HasColumnType("int");
 
@@ -145,9 +127,6 @@ namespace GadgetStore.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PictureId")
                         .HasColumnType("int");
 
@@ -167,8 +146,6 @@ namespace GadgetStore.Migrations
 
                     b.HasIndex("CPUId");
 
-                    b.HasIndex("CartId");
-
                     b.HasIndex("ColorId");
 
                     b.HasIndex("DiagonalId");
@@ -176,8 +153,6 @@ namespace GadgetStore.Migrations
                     b.HasIndex("GadgetTypeId");
 
                     b.HasIndex("ManufacturerId");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("PictureId");
 
@@ -237,6 +212,9 @@ namespace GadgetStore.Migrations
 
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Cart")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerId")
                         .HasColumnType("nvarchar(450)");
@@ -340,12 +318,6 @@ namespace GadgetStore.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<float>("Balance")
-                        .HasColumnType("real");
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -397,8 +369,6 @@ namespace GadgetStore.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -550,10 +520,6 @@ namespace GadgetStore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GadgetStore.Models.Cart", null)
-                        .WithMany("Gadgets")
-                        .HasForeignKey("CartId");
-
                     b.HasOne("GadgetStore.Models.Color", "Color")
                         .WithMany()
                         .HasForeignKey("ColorId")
@@ -577,10 +543,6 @@ namespace GadgetStore.Migrations
                         .HasForeignKey("ManufacturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("GadgetStore.Models.Order", null)
-                        .WithMany("Gadgets")
-                        .HasForeignKey("OrderId");
 
                     b.HasOne("GadgetStore.Models.Picture", "Picture")
                         .WithMany()
@@ -616,15 +578,6 @@ namespace GadgetStore.Migrations
                     b.HasOne("GadgetStore.Models.User", "Seller")
                         .WithMany()
                         .HasForeignKey("SellerId");
-                });
-
-            modelBuilder.Entity("GadgetStore.Models.User", b =>
-                {
-                    b.HasOne("GadgetStore.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

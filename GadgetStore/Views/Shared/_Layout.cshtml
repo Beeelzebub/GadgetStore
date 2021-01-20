@@ -28,27 +28,24 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Контакты</a>
                         </li>
-
-                        @{
-                            if (User.IsInRole("admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index"> Управление </a>
-                                </li>
-                            }
-                            else if (User.IsInRole("seller"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Gadgets" asp-action="Index"> Управление </a>
-                                </li>
-                            }
-                        }
                     </ul>
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav">
                         @if (User.Identity.IsAuthenticated)
                         {
+                            if (User.IsInRole("admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index"><i class="fa fa-tasks"> </i> Управление </a>
+                                </li>
+                            }
+                            else if (User.IsInRole("seller"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="ActiveOrders"><i class="fa fa-tasks"> </i> Управление </a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link pr-2 text-dark" asp-area="" asp-controller="Orders" asp-action="MyOrders"><i class="fa fa-truck"> </i> Заказы</a>
                             </li>

@@ -23,6 +23,11 @@ namespace GadgetStore.Controllers
             return View();
         }
 
+        public IActionResult Management()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

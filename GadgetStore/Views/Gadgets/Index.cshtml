@@ -2,56 +2,59 @@
 
 
 <div class="input-group mb-4">
-    <input type="search" placeholder="Введите название товара" aria-describedby="button-addon5" class="form-control">
+    <input id="searachString" type="search" placeholder="Введите название товара" aria-describedby="button-addon5" class="smoth-border form-control">
     <div class="input-group-append">
-        <button id="button-addon5" type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+        <button id="button-addon5" type="submit" class="smoth-border btn my-btn"
+                onclick="search()">
+        <i class="fa fa-search"></i>
+        </button>
     </div>
 </div>
 <div class="container row">
-    <div class="col-3 pl-0">
+    <div class="col-3 pl-3 pr-3 content">
         <p class="font-weight-normal text-center h4 mb-3">Фильтр</p>
         
-        <form asp-action="">
-            <div class="form-group">
+        <form id="filter" asp-action="Filter">
+            <div class="form-group text-center">
                 <label class="control-label font-weight-light mb-0"> Тип гаджета </label>
-                <select name="GadgetType" class="form-control form-control-sm" asp-items="ViewBag.GadgetTypes"></select>
+                <select id="GadgetType" name="GadgetType" class="smoth-border form-control form-control-sm" asp-items="ViewBag.GadgetTypes"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label class="control-label font-weight-light mb-0"> Производитель </label>
-                <select name="Manufacturer" class="form-control form-control-sm" asp-items="ViewBag.Manufacturers"></select>
+                <select id="Manufacturer" name="Manufacturer" class="smoth-border form-control form-control-sm" asp-items="ViewBag.Manufacturers"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label class="control-label font-weight-light mb-0"> Диагональ </label>
-                <select name="Diagonal" class="form-control form-control-sm" asp-items="ViewBag.Diagonals"></select>
+                <select id="Diagonal" name="Diagonal" class="smoth-border form-control form-control-sm" asp-items="ViewBag.Diagonals"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label class="control-label font-weight-light mb-0"> Разрешение </label>
-                <select name="ScreenResolution" class="form-control form-control-sm" asp-items="ViewBag.ScreenResolutions"></select>
+                <select id="ScreenResolution" name="ScreenResolution" class="smoth-border form-control form-control-sm" asp-items="ViewBag.ScreenResolutions"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label class="control-label font-weight-light mb-0"> Цвет </label>
-                <select name="Color" class="form-control form-control-sm" asp-items="ViewBag.Colors"></select>
+                <select id="Color" name="Color" class="smoth-border form-control form-control-sm" asp-items="ViewBag.Colors"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label class="control-label font-weight-light mb-0"> Процессор </label>
-                <select name="CPU" class="form-control form-control-sm" asp-items="ViewBag.CPUs"></select>
+                <select id="CPU" name="CPU" class="smoth-border form-control form-control-sm" asp-items="ViewBag.CPUs"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label class="control-label font-weight-light mb-0"> Флэш-память </label>
-                <select name="Memory" class="form-control form-control-sm" asp-items="ViewBag.Memory"></select>
+                <select id="Memory" name="Memory" class="smoth-border form-control form-control-sm" asp-items="ViewBag.Memory"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label class="control-label font-weight-light mb-0"> Оперативная память </label>
-                <select name="RAM" class="form-control form-control-sm" asp-items="ViewBag.RAM"></select>
+                <select id="RAM" name="RAM" class="smoth-border form-control form-control-sm" asp-items="ViewBag.RAM"></select>
             </div>
 
 
             <div class="form-group row pt-3 justify-content-center">
-                <input type="submit" value="Применить" class="btn btn-sm btn-primary" />
+                <input type="button" value="Применить" class="btn my-btn btn-sm" onclick="filter()" />
             </div>
         </form>
     </div>
-    <div class="col pt-5">
+    <div id="assortment" class="col pt-5 ml-3 content">
         @foreach (var item in Model)
         {
             <div class="row well offset-md-1 pb-5">
@@ -80,7 +83,7 @@
                     else
                     {   
                         <strong class="text-center">@item.Price р. </strong> <br />
-                        <a class="btn btn-sm btn-success align-self-center"
+                        <a class="btn btn-sm buy-btn align-self-center"
                            onclick="putInCart(@item.Id)">
                             В корзину
                         </a>
@@ -94,12 +97,12 @@
 
 <div class="modal text-center fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog modal-sm">
-        <div class="modal-content">
+        <div class="modal-content modal-borders">
             <div class="modal-body">
                 <h3 id="modal-info">Modal Body</h3>
             </div>
             <div class="modal-footer">
-                <div class="container-fluid">
+                <div class="container-fluid p-0 m-0">
                     <button type="button" class="btn btn-block btn-default" data-dismiss="modal">Ok</button>
                 </div>
             </div>

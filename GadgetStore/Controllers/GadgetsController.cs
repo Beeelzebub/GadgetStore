@@ -21,31 +21,48 @@ namespace GadgetStore.Controllers
             _context = context;
         }
 
-        // GET: Gadgets
         public async Task<IActionResult> Index()
         {
-            FilterViewModel filterViewModel = new FilterViewModel
-            {
-                GadgetTypes = await _context.gadgetTypes.ToListAsync(),
-                Diagonals = await _context.Diagonals.ToListAsync(),
-                ScreenResolutions = await _context.ScreenResolutions.ToListAsync(),
-                Colors = await _context.Colors.ToListAsync(),
-                CPUs = await _context.CPUs.ToListAsync(),
-                Manufacturers = await _context.Manufacturers.ToListAsync(),
-                Year = await _context.Gadgets.Select(g => g.Year).Distinct().ToArrayAsync(),
-                Memory = await _context.Gadgets.Select(g => g.Memory).Distinct().ToArrayAsync(),
-                RAM = await _context.Gadgets.Select(g => g.RAM).Distinct().ToArrayAsync()
-            };
-            
-            ViewData["Manufacturers"] = new SelectList(await _context.Manufacturers.ToListAsync(), "Id", "Name");
-            ViewData["GadgetTypes"] = new SelectList(await _context.gadgetTypes.ToListAsync(), "Id", "Name");
-            ViewData["Diagonals"] = new SelectList(await _context.Diagonals.ToListAsync(), "Id", "Value");
-            ViewData["ScreenResolutions"] = new SelectList(await _context.ScreenResolutions.ToListAsync(), "Id", "Value");
-            ViewData["Colors"] = new SelectList(await _context.Colors.ToListAsync(), "Id", "Name");
-            ViewData["CPUs"] = new SelectList(await _context.CPUs.ToListAsync(), "Id", "Name");
-            ViewData["Year"] = new SelectList(await _context.Gadgets.Select(g => g.Year).Distinct().ToArrayAsync());
-            ViewData["Memory"] = new SelectList(await _context.Gadgets.Select(g => g.Memory).Distinct().ToArrayAsync());
-            ViewData["RAM"] = new SelectList(await _context.Gadgets.Select(g => g.RAM).Distinct().ToArrayAsync());
+            var manufacturers = await _context.Manufacturers.ToListAsync();
+            manufacturers.Add(new Manufacturer { Id = 0, Name = "Любой" });
+            manufacturers.Reverse();
+
+            var gadgetType = await _context.gadgetTypes.ToListAsync();
+            gadgetType.Add(new GadgetType { Id = 0, Name = "Любой" });
+            gadgetType.Reverse();
+
+            var diagonals = await _context.Diagonals.ToListAsync();
+            diagonals.Add(new Diagonal { Id = 0, Value = "Любая" });
+            diagonals.Reverse();
+
+            var screenResolutions = await _context.ScreenResolutions.ToListAsync();
+            screenResolutions.Add(new ScreenResolution { Id = 0, Value = "Любое" });
+            screenResolutions.Reverse();
+
+            var colors = await _context.Colors.ToListAsync();
+            colors.Add(new Color { Id = 0, Name = "Любой" });
+            colors.Reverse();
+
+            var CPUs = await _context.CPUs.ToListAsync();
+            CPUs.Add(new CPU { Id = 0, Name = "Любой" });
+            CPUs.Reverse();
+
+            var Memory = await _context.Gadgets.Select(g => g.Memory).Distinct().ToListAsync();
+            Memory.Add("Любая");
+            Memory.Reverse();
+
+            var RAM = await _context.Gadgets.Select(g => g.RAM).Distinct().ToListAsync();
+            RAM.Add("Любая");
+            RAM.Reverse();
+
+            ViewData["Manufacturers"] = new SelectList(manufacturers, "Id", "Name", 0);
+            ViewData["GadgetTypes"] = new SelectList(gadgetType, "Id", "Name", 0);
+            ViewData["Diagonals"] = new SelectList(diagonals, "Id", "Value", 0);
+            ViewData["ScreenResolutions"] = new SelectList(screenResolutions, "Id", "Value", 0);
+            ViewData["Colors"] = new SelectList(colors, "Id", "Name", 0);
+            ViewData["CPUs"] = new SelectList(CPUs, "Id", "Name", 0);
+            ViewData["Memory"] = new SelectList(Memory, 0);
+            ViewData["RAM"] = new SelectList(RAM, 0);
 
 
             var applicationDbContext = _context.Gadgets
@@ -60,7 +77,6 @@ namespace GadgetStore.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Gadgets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -84,7 +100,6 @@ namespace GadgetStore.Controllers
             return View(gadget);
         }
 
-        // GET: Gadgets/Create
         public async Task<IActionResult> Create()
         {
             ViewData["GadgetTypeId"] = new SelectList(_context.gadgetTypes, "Id", "Name");
@@ -100,9 +115,6 @@ namespace GadgetStore.Controllers
             return View();
         }
 
-        // POST: Gadgets/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(GadgetViewModel model)
@@ -210,7 +222,7 @@ namespace GadgetStore.Controllers
 
                 _context.Add(gadget);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Management));
             }
 
             ViewData["GadgetTypeId"] = new SelectList(_context.gadgetTypes, "Id", "Name");
@@ -226,7 +238,27 @@ namespace GadgetStore.Controllers
             return View(model);
         }
 
-        // GET: Gadgets/Edit/5
+        [HttpPost]
+        public async Task<IActionResult> Search(string searchName)
+        {
+            if (searchName == null)
+            {
+                searchName = "";
+            }
+            var gadgets = await _context.Gadgets
+                .Include(g => g.Picture)
+                .Include(g => g.CPU)
+                .Include(g => g.Color)
+                .Include(g => g.Diagonal)
+                .Include(g => g.GadgetType)
+                .Include(g => g.Manufacturer)
+                .Include(g => g.ScreenResolution)
+                .Where(g => g.Name.Contains(searchName))
+                .ToListAsync();
+
+            return PartialView("Assortment", gadgets);
+        }
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -234,34 +266,216 @@ namespace GadgetStore.Controllers
                 return NotFound();
             }
 
-            var gadget = await _context.Gadgets.FindAsync(id);
+            var gadget = await _context.Gadgets
+                .Include(g => g.Picture)
+                .Include(g => g.CPU)
+                .Include(g => g.Color)
+                .Include(g => g.Diagonal)
+                .Include(g => g.GadgetType)
+                .Include(g => g.Manufacturer)
+                .Include(g => g.ScreenResolution)
+                .Where(g => g.Id == id)
+                .FirstOrDefaultAsync();
+
             if (gadget == null)
             {
                 return NotFound();
             }
-            ViewData["CPUId"] = new SelectList(_context.CPUs, "Id", "Id", gadget.CPUId);
-            ViewData["Colorid"] = new SelectList(_context.Colors, "Id", "Id", gadget.ColorId);
-            ViewData["DiagonalId"] = new SelectList(_context.Diagonals, "Id", "Id", gadget.DiagonalId);
-            ViewData["GadgetTypeId"] = new SelectList(_context.gadgetTypes, "Id", "Id", gadget.GadgetTypeId);
-            ViewData["ManufacturerId"] = new SelectList(_context.Manufacturers, "Id", "Id", gadget.ManufacturerId);
-            ViewData["ScreenResolutionId"] = new SelectList(_context.ScreenResolutions, "Id", "Id", gadget.ScreenResolutionId);
-            return View(gadget);
+
+            GadgetViewModel model = new GadgetViewModel
+            {
+                Name = gadget.Name,
+                Year = gadget.Year,
+                Price = gadget.Price,
+                Count = gadget.Count,
+                Memory = gadget.Memory,
+                RAM = gadget.RAM,
+                Diagonal = gadget.Diagonal.Value,
+                ScreenResolution = gadget.ScreenResolution.Value,
+                Color = gadget.Color.Name,
+                CPU = gadget.CPU.Name,
+                Manufacturer = gadget.Manufacturer.Name
+            };
+
+            ViewData["GadgetTypeId"] = new SelectList(_context.gadgetTypes, "Id", "Name", gadget.GadgetType);
+            ViewData["Manufacturers"] = await _context.Manufacturers.Select(m => m.Name).ToListAsync();
+            ViewData["Diagonals"] = await _context.Diagonals.Select(d => d.Value).ToListAsync();
+            ViewData["ScreenResolutions"] = await _context.ScreenResolutions.Select(s => s.Value).ToListAsync();
+            ViewData["Colors"] = await _context.Colors.Select(c => c.Name).ToListAsync();
+            ViewData["CPUs"] = await _context.CPUs.Select(c => c.Name).ToListAsync();
+            ViewData["Year"] = await _context.Gadgets.Select(g => g.Year).Distinct().ToArrayAsync();
+            ViewData["Memory"] = await _context.Gadgets.Select(g => g.Memory).Distinct().ToArrayAsync();
+            ViewData["RAM"] = await _context.Gadgets.Select(g => g.RAM).Distinct().ToArrayAsync();
+            ViewData["Id"] = gadget.Id;
+
+            return View(model);
         }
 
-        // POST: Gadgets/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public async Task<IActionResult> Filter(
+            [Bind("Year", "Memory", "RAM", "GadgetType", "Manufacturer", "Diagonal", "ScreenResolution", "Color", "CPU")] FilterViewModel model)
+        {
+            var gadgets = await _context.Gadgets
+                .Include(g => g.Picture)
+                .Include(g => g.CPU)
+                .Include(g => g.Color)
+                .Include(g => g.Diagonal)
+                .Include(g => g.GadgetType)
+                .Include(g => g.Manufacturer)
+                .Include(g => g.ScreenResolution)
+                .ToListAsync();
+
+            if (model.GadgetType != 0)
+            {
+                gadgets = gadgets.Where(g => g.GadgetTypeId == model.GadgetType).ToList();
+            }
+            if (model.Memory != "Любая")
+            {
+                gadgets = gadgets.Where(g => g.Memory.Contains(model.Memory)).ToList();
+            }
+            if (model.RAM != "Любая")
+            {
+                gadgets = gadgets.Where(g => g.RAM.Contains(model.RAM)).ToList();
+            }
+            if (model.Manufacturer != 0)
+            {
+                gadgets = gadgets.Where(g => g.ManufacturerId == model.Manufacturer).ToList();
+            }
+            if (model.Diagonal != 0)
+            {
+                gadgets = gadgets.Where(g => g.DiagonalId == model.Diagonal).ToList();
+            }
+            if (model.ScreenResolution != 0)
+            {
+                gadgets = gadgets.Where(g => g.ScreenResolutionId == model.ScreenResolution).ToList();
+            }
+            if (model.Color != 0)
+            {
+                gadgets = gadgets.Where(g => g.ColorId == model.Color).ToList();
+            }
+            if (model.CPU != 0)
+            {
+                gadgets = gadgets.Where(g => g.CPUId == model.CPU).ToList();
+            }
+
+            return PartialView("Assortment", gadgets);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Year,Count,Memory,RAM,GadgetTypeId,DiagonalId,ScreenResolutionId,Colorid,CPUId,ManufacturerId")] Gadget gadget)
+        public async Task<IActionResult> Edit(int? Id, GadgetViewModel model)
         {
-            if (id != gadget.Id)
+            if (Id == null)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                byte[] imageData = null;
+                Picture picture = null;
+                
+                if (model.Image != null)
+                {
+                    // считываем переданный файл в массив байтов
+                    using (var binaryReader = new BinaryReader(model.Image.OpenReadStream()))
+                    {
+                        imageData = binaryReader.ReadBytes((int)model.Image.Length);
+                    }
+
+                    picture = new Picture { Image = imageData };
+                    _context.Pictures.Add(picture);
+                }
+
+                
+
+                CPU cpu = await _context.CPUs
+                    .Where(c => c.Name.ToLower() == model.CPU.ToLower())
+                    .FirstOrDefaultAsync();
+                if (cpu == null)
+                {
+                    cpu = new CPU
+                    {
+                        Name = model.CPU
+                    };
+
+                    await _context.CPUs.AddAsync(cpu);
+                }
+
+                Diagonal diagonal = await _context.Diagonals
+                    .Where(d => d.Value.ToLower() == model.Diagonal.ToLower())
+                    .FirstOrDefaultAsync();
+                if (diagonal == null)
+                {
+                    diagonal = new Diagonal
+                    {
+                        Value = model.Diagonal
+                    };
+
+                    await _context.Diagonals.AddAsync(diagonal);
+                }
+
+                ScreenResolution screenResolution = await _context.ScreenResolutions
+                    .Where(s => s.Value.ToLower() == model.ScreenResolution.ToLower())
+                    .FirstOrDefaultAsync();
+                if (screenResolution == null)
+                {
+                    screenResolution = new ScreenResolution
+                    {
+                        Value = model.ScreenResolution
+                    };
+
+                    await _context.ScreenResolutions.AddAsync(screenResolution);
+                }
+
+                Color color = await _context.Colors
+                    .Where(c => c.Name.ToLower() == model.Color.ToLower())
+                    .FirstOrDefaultAsync();
+                if (color == null)
+                {
+                    color = new Color
+                    {
+                        Name = model.Color
+                    };
+
+                    await _context.Colors.AddAsync(color);
+                }
+
+                Manufacturer manufacturer = await _context.Manufacturers
+                    .Where(m => m.Name.ToLower() == model.Manufacturer.ToLower())
+                    .FirstOrDefaultAsync();
+                if (manufacturer == null)
+                {
+                    manufacturer = new Manufacturer
+                    {
+                        Name = model.Manufacturer
+                    };
+
+                    await _context.Manufacturers.AddAsync(manufacturer);
+                }
+
+
+                await _context.SaveChangesAsync();
+
+                Gadget gadget = await _context.Gadgets.FindAsync(Id);
+
+                if (picture != null)
+                {
+                    gadget.PictureId = picture.Id;
+                }
+                gadget.CPUId = cpu.Id;
+                gadget.DiagonalId = diagonal.Id;
+                gadget.ScreenResolutionId = screenResolution.Id;
+                gadget.ColorId = color.Id;
+                gadget.ManufacturerId = manufacturer.Id;
+                gadget.Year = model.Year;
+                gadget.Count = model.Count;
+                gadget.Memory = model.Memory;
+                gadget.RAM = model.RAM;
+                gadget.GadgetTypeId = model.GadgetTypeId;
+                gadget.Name = model.Name;
+                gadget.Price = model.Price;
+
                 try
                 {
                     _context.Update(gadget);
@@ -278,18 +492,39 @@ namespace GadgetStore.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Management));
             }
-            ViewData["CPUId"] = new SelectList(_context.CPUs, "Id", "Id", gadget.CPUId);
-            ViewData["Colorid"] = new SelectList(_context.Colors, "Id", "Id", gadget.ColorId);
-            ViewData["DiagonalId"] = new SelectList(_context.Diagonals, "Id", "Id", gadget.DiagonalId);
-            ViewData["GadgetTypeId"] = new SelectList(_context.gadgetTypes, "Id", "Id", gadget.GadgetTypeId);
-            ViewData["ManufacturerId"] = new SelectList(_context.Manufacturers, "Id", "Id", gadget.ManufacturerId);
-            ViewData["ScreenResolutionId"] = new SelectList(_context.ScreenResolutions, "Id", "Id", gadget.ScreenResolutionId);
-            return View(gadget);
+
+            ViewData["GadgetTypeId"] = new SelectList(_context.gadgetTypes, "Id", "Name", model.GadgetTypeId);
+            ViewData["Manufacturers"] = await _context.Manufacturers.Select(m => m.Name).ToListAsync();
+            ViewData["Diagonals"] = await _context.Diagonals.Select(d => d.Value).ToListAsync();
+            ViewData["ScreenResolutions"] = await _context.ScreenResolutions.Select(s => s.Value).ToListAsync();
+            ViewData["Colors"] = await _context.Colors.Select(c => c.Name).ToListAsync();
+            ViewData["CPUs"] = await _context.CPUs.Select(c => c.Name).ToListAsync();
+            ViewData["Year"] = await _context.Gadgets.Select(g => g.Year).Distinct().ToArrayAsync();
+            ViewData["Memory"] = await _context.Gadgets.Select(g => g.Memory).Distinct().ToArrayAsync();
+            ViewData["RAM"] = await _context.Gadgets.Select(g => g.RAM).Distinct().ToArrayAsync();
+            ViewData["Id"] = Id;
+
+            return View(model);
         }
 
-        // GET: Gadgets/Delete/5
+        public async Task<IActionResult> Management()
+        {
+            var gadgets = await _context.Gadgets
+                .Include(g => g.Picture)
+                .Include(g => g.CPU)
+                .Include(g => g.Color)
+                .Include(g => g.Diagonal)
+                .Include(g => g.GadgetType)
+                .Include(g => g.Manufacturer)
+                .Include(g => g.ScreenResolution)
+                .ToListAsync();
+
+
+            return View(gadgets);
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -297,31 +532,25 @@ namespace GadgetStore.Controllers
                 return NotFound();
             }
 
-            var gadget = await _context.Gadgets
-                .Include(g => g.CPU)
-                .Include(g => g.Color)
-                .Include(g => g.Diagonal)
-                .Include(g => g.GadgetType)
-                .Include(g => g.Manufacturer)
-                .Include(g => g.ScreenResolution)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var gadget = await _context.Gadgets.FirstOrDefaultAsync(m => m.Id == id);
+
             if (gadget == null)
             {
                 return NotFound();
             }
 
-            return View(gadget);
-        }
+            var picture = await _context.Pictures.Where(p => p.Id == gadget.PictureId).FirstOrDefaultAsync();
 
-        // POST: Gadgets/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var gadget = await _context.Gadgets.FindAsync(id);
             _context.Gadgets.Remove(gadget);
+
+            if (picture != null)
+            {
+                _context.Pictures.Remove(picture);
+            }
+
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(nameof(Management));
         }
 
         private bool GadgetExists(int id)

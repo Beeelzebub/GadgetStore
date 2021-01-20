@@ -1,1 +1,46 @@
-﻿
+﻿@model IEnumerable<GadgetStore.Models.Gadget>
+
+@if (Model.Count() == 0)
+{
+    <span> По вашему запросу ничего не найдено. </span>
+}
+else
+{
+    @foreach (var item in Model)
+    {
+        <div class="row well offset-md-1 pb-5">
+            <div class="col-3 row justify-content-center">
+                @if (item.Picture.Image != null)
+                {
+                    <img style='width:135px; height:220px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Picture.Image))" />
+                }
+            </div>
+            <div class="col-6">
+                <strong>@item.GadgetType.Name @item.Name</strong> <br />
+                <span class="">Производитель: @item.Manufacturer.Name </span> <br />
+                <span>Год: @item.Year </span> <br />
+                <span>Флэш-память: @item.Memory </span> <br />
+                <span>ОЗУ: @item.RAM </span> <br />
+                <span>Процессов: @item.CPU.Name </span> <br />
+                <span>Диагональ экрана: @item.Diagonal.Value </span> <br />
+                <span>Разрешение экрана: @item.ScreenResolution.Value </span> <br />
+                <span>Цвет корпуса: @item.Color.Name </span> <br />
+            </div>
+            <div class="col-3">
+                @if (item.Count < 1)
+                {
+                    <span class="text-danger text-center">Нет в наличии</span>
+                }
+                else
+                {
+                    <strong class="text-center">@item.Price р. </strong> <br />
+                    <a class="btn btn-sm buy-btn align-self-center"
+                       onclick="putInCart(@item.Id)">
+                        В корзину
+                    </a>
+                }
+            </div>
+        </div>
+    }
+}
+

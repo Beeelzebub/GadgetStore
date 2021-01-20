@@ -8,7 +8,6 @@ namespace GadgetStore.Models
 {
     public class User : IdentityUser
     {
-        public float Balance { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
     }

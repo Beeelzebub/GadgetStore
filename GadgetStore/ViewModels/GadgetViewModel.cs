@@ -46,7 +46,6 @@ namespace GadgetStore.ViewModels
         [Required]
         public string Manufacturer { get; set; }
 
-        [Required]
         public IFormFile Image { get; set; }
     }
 }

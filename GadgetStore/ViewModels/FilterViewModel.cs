@@ -8,24 +8,14 @@ namespace GadgetStore.ViewModels
 {
     public class FilterViewModel
     {
-        public int[] Year { get; set; }
-        public string[] Memory { get; set; }
-        public string[] RAM { get; set; }
-        public List<GadgetType> GadgetTypes { get; set; }
-        public List<Diagonal> Diagonals { get; set; }
-        public List<ScreenResolution> ScreenResolutions { get; set; }
-        public List<Color> Colors { get; set; }
-        public List<CPU> CPUs { get; set; }
-        public List<Manufacturer> Manufacturers { get; set; }
-        
-        public FilterViewModel()
-        {
-            GadgetTypes = new List<GadgetType>();
-            Diagonals = new List<Diagonal>();
-            ScreenResolutions = new List<ScreenResolution>();
-            Colors = new List<Color>();
-            CPUs = new List<CPU>();
-            Manufacturers = new List<Manufacturer>();
-        }
+        public string Memory { get; set; }
+        public string RAM { get; set; }
+        public int GadgetType { get; set; }
+        public int Manufacturer { get; set; }
+        public int Diagonal { get; set; }
+        public int ScreenResolution { get; set; }
+        public int Color { get; set; }
+        public int CPU { get; set; }
+
     }
 }
