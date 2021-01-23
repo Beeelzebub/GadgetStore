@@ -77,29 +77,6 @@ namespace GadgetStore.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var gadget = await _context.Gadgets
-                .Include(g => g.CPU)
-                .Include(g => g.Color)
-                .Include(g => g.Diagonal)
-                .Include(g => g.GadgetType)
-                .Include(g => g.Manufacturer)
-                .Include(g => g.ScreenResolution)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (gadget == null)
-            {
-                return NotFound();
-            }
-
-            return View(gadget);
-        }
-
         public async Task<IActionResult> Create()
         {
             ViewData["GadgetTypeId"] = new SelectList(_context.gadgetTypes, "Id", "Name");
@@ -133,7 +110,6 @@ namespace GadgetStore.Controllers
                 }
 
                 Picture picture = new Picture { Image = imageData };
-                _context.Pictures.Add(picture);
 
                 CPU cpu = await _context.CPUs
                     .Where(c => c.Name.ToLower() == model.CPU.ToLower())
@@ -205,7 +181,7 @@ namespace GadgetStore.Controllers
 
                 Gadget gadget = new Gadget
                 {
-                    PictureId = picture.Id,
+                    Picture = picture,
                     CPUId = cpu.Id,
                     DiagonalId = diagonal.Id,
                     ScreenResolutionId = screenResolution.Id,
@@ -377,7 +353,6 @@ namespace GadgetStore.Controllers
                 
                 if (model.Image != null)
                 {
-                    // считываем переданный файл в массив байтов
                     using (var binaryReader = new BinaryReader(model.Image.OpenReadStream()))
                     {
                         imageData = binaryReader.ReadBytes((int)model.Image.Length);
@@ -459,6 +434,11 @@ namespace GadgetStore.Controllers
 
                 Gadget gadget = await _context.Gadgets.FindAsync(Id);
 
+                if (gadget == null)
+                {
+                    return NotFound();
+                }
+
                 if (picture != null)
                 {
                     gadget.PictureId = picture.Id;
@@ -476,22 +456,10 @@ namespace GadgetStore.Controllers
                 gadget.Name = model.Name;
                 gadget.Price = model.Price;
 
-                try
-                {
-                    _context.Update(gadget);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!GadgetExists(gadget.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Update(gadget);
+                await _context.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Management));
             }
 
@@ -553,9 +521,5 @@ namespace GadgetStore.Controllers
             return RedirectToAction(nameof(Management));
         }
 
-        private bool GadgetExists(int id)
-        {
-            return _context.Gadgets.Any(e => e.Id == id);
-        }
     }
 }

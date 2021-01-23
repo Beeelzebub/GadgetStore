@@ -25,7 +25,6 @@ namespace GadgetStore.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        //Сериализованный объект Cart 
         public string Cart { get; set; }
 
         public Cart GetCartObject()

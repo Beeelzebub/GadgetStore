@@ -26,18 +26,26 @@ else
                 <span>Разрешение экрана: @item.ScreenResolution.Value </span> <br />
                 <span>Цвет корпуса: @item.Color.Name </span> <br />
             </div>
+
+
             <div class="col-3">
                 @if (item.Count < 1)
                 {
-                    <span class="text-danger text-center">Нет в наличии</span>
+                    <div class="row justify-content-center">
+                        <span class="text-danger text-center">Нет в наличии</span>
+                    </div>
                 }
                 else
                 {
-                    <strong class="text-center">@item.Price р. </strong> <br />
-                    <a class="btn btn-sm buy-btn align-self-center"
-                       onclick="putInCart(@item.Id)">
-                        В корзину
-                    </a>
+                    <div class="row justify-content-center">
+                        <strong class="text-center">@item.Price р. </strong>
+                    </div>
+                    <div class="row justify-content-center">
+                        <a class="btn btn-sm buy-btn align-self-center"
+                           onclick="putInCart(@item.Id)">
+                            В корзину
+                        </a>
+                    </div>
                 }
             </div>
         </div>

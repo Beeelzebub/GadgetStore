@@ -114,13 +114,13 @@ namespace GadgetStore.Controllers
                 {
                     if (model.Password != null)
                     {
-                        await _userManager.RemovePasswordAsync(user);
-                        await _userManager.AddPasswordAsync(user, model.Password);
+                            await _userManager.RemovePasswordAsync(user);
+                            await _userManager.AddPasswordAsync(user, model.Password);
                     }
 
                     await _userManager.AddToRoleAsync(user, model.Role);
 
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index)); 
                 }
                 else
                 {

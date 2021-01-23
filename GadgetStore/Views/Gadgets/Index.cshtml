@@ -6,14 +6,14 @@
     <div class="input-group-append">
         <button id="button-addon5" type="submit" class="smoth-border btn my-btn"
                 onclick="search()">
-        <i class="fa fa-search"></i>
+            <i class="fa fa-search"></i>
         </button>
     </div>
 </div>
 <div class="container row">
     <div class="col-3 pl-3 pr-3 content">
         <p class="font-weight-normal text-center h4 mb-3">Фильтр</p>
-        
+
         <form id="filter" asp-action="Filter">
             <div class="form-group text-center">
                 <label class="control-label font-weight-light mb-0"> Тип гаджета </label>
@@ -65,7 +65,7 @@
                     }
                 </div>
                 <div class="col-6">
-                    <strong>@item.GadgetType.Name @item.Name</strong> <br/>
+                    <strong>@item.GadgetType.Name @item.Name</strong> <br />
                     <span class="">Производитель: @item.Manufacturer.Name </span> <br />
                     <span>Год: @item.Year </span> <br />
                     <span>Флэш-память: @item.Memory </span> <br />
@@ -75,23 +75,31 @@
                     <span>Разрешение экрана: @item.ScreenResolution.Value </span> <br />
                     <span>Цвет корпуса: @item.Color.Name </span> <br />
                 </div>
+
+
                 <div class="col-3">
                     @if (item.Count < 1)
                     {
-                        <span class="text-danger text-center">Нет в наличии</span>
+                        <div class="row justify-content-center">
+                            <span class="text-danger text-center">Нет в наличии</span>
+                        </div>
                     }
                     else
-                    {   
-                        <strong class="text-center">@item.Price р. </strong> <br />
-                        <a class="btn btn-sm buy-btn align-self-center"
-                           onclick="putInCart(@item.Id)">
-                            В корзину
-                        </a>
+                    {
+                        <div class="row justify-content-center">
+                            <strong class="text-center">@item.Price р. </strong>
+                        </div>
+                        <div class="row justify-content-center">
+                            <a class="btn btn-sm buy-btn align-self-center"
+                               onclick="putInCart(@item.Id)">
+                                В корзину
+                            </a>
+                        </div>
                     }
                 </div>
             </div>
         }
-        
+
     </div>
 </div>
 

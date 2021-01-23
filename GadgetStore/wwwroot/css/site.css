@@ -7,9 +7,14 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+@font-face {
+    font-family: "Logo";
+    src: url(/fonts/18300.ttf);
+}
+
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: white;
 }
 
 .btn-primary {
@@ -60,13 +65,21 @@ html {
 }
 
 body {
-    /* Margin bottom by footer height */
+    /* Margin bottom by footer height linear-gradient(90deg, #69b7eb, #b3dbd3, #f4d6db); */
     margin-bottom: 60px;
     background: linear-gradient(90deg, #69b7eb, #b3dbd3, #f4d6db);
 }
 
+nav {
+    background: rgba(0,0,0,0.5) !important;
+    border: none !important;
+    color: white !important;
+}
+
 .footer {
-    background-color: rgb(255,255,255, 0.62);
+    background-color: rgba(0,0,0, 0.3);
+    border: none !important;
+    color: white;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -77,7 +90,16 @@ body {
 .logo {
     margin-top: 60px;
     margin-bottom: 60px;
+    font-family: Logo !important;
+    color: white;
+    font-weight: lighter;
+    -webkit-text-stroke: 1.1px rgba(0, 0, 0, 0.6);
 }
+
+.logo-bottom {
+    -webkit-text-stroke: 0.9px rgba(0,0,0, 0.6) !important;
+}
+
 
 .nondecoration {
     text-decoration: none !important;
@@ -144,7 +166,7 @@ body {
 }
 
 .content {
-    background-color: rgb(255,255,255, 0.4);
+    background-color: rgba(255,255,255, 0.4);
     border-radius: 20px;
 }
 
@@ -168,7 +190,7 @@ body {
 }
 
 table {
-    background-color: rgb(255,255,255, 0.4);
+    background-color: rgba(255,255,255, 0.4);
     border-radius:20px;
     text-align: center;
     border: hidden !important;
@@ -180,4 +202,8 @@ table {
 
 .action-icon {
     font-size: 24px;
+}
+
+.logo-text {
+    font-family: Logo;
 }

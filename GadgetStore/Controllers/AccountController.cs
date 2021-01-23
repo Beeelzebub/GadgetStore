@@ -22,6 +22,53 @@ namespace GadgetStore.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> ChangeLogin(string newLogin)
+        {
+            User user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.UserName = newLogin;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (updateResult.Succeeded)
+            {
+                return View("ChangeLoginInfo", true);
+            }
+
+            return View("ChangeLoginInfo", false);
+        }
+
+        public async Task<IActionResult> ChangePassword(string newPass)
+        {
+            User user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.RemovePasswordAsync(user);
+
+            var updateResult = await _userManager.AddPasswordAsync(user, newPass);
+
+            if (updateResult.Succeeded)
+            {
+                return View("ChangePasswordInfo", true);
+            }
+
+            return View("ChangePasswordInfo", false);
+        }
+
+        public async Task<IActionResult> MyAccount(RegisterViewModel model)
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Register()
         {

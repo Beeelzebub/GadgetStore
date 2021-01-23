@@ -82,6 +82,7 @@ namespace GadgetStore.Controllers
         public async Task<IActionResult> Pay()
         {
             Cart cart = HttpContext.Session.Get<Cart>("cart");
+
             foreach(CartLine item in cart.Lines())
             {
                 Gadget gadget = _context.Gadgets.Where(g => g.Id == item.Gadget.Id).FirstOrDefault();
@@ -133,7 +134,6 @@ namespace GadgetStore.Controllers
             {
                 cart.AddItem(gadget);
                 HttpContext.Session.Set<Cart>("cart", cart);
-                Cart cart2 = HttpContext.Session.Get<Cart>("cart") ?? new Cart();
 
                 return PartialView(true);
             }
@@ -150,7 +150,11 @@ namespace GadgetStore.Controllers
             if (gadget != null)
             {
                 cart.RemoveItem(gadget);
-                //доделать
+
+                if (cart.Lines().Count() == 0)
+                {
+                    cart = null;
+                }
                 HttpContext.Session.Set<Cart>("cart", cart);
             }
             

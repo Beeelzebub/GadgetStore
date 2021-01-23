@@ -15,7 +15,6 @@ function search() {
 }
 
 function filter() {
-    console.log($('#GadgetType').val());
     $('#assortment').load('/Gadgets/Filter', {
         GadgetType: $('#GadgetType').val(),
         Manufacturer: $('#Manufacturer').val(),
