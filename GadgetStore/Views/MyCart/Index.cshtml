@@ -1,18 +1,25 @@
 ﻿@model GadgetStore.Models.Cart
 
+<div class="text-center logo">
+    <h1 class="display-4">Моя корзина</h1>
+</div>
+
+
 @if (Model == null)
 {
-    <span>Ваша корзина пуста</span>
+    <div class="row justify-content-center content h-100">
+        <span>Ваша корзина пуста</span>
+    </div>
 }
 else
 {
     <table class="table">
         <thead>
             <tr>
-                <th>
+                <th class="w-60">
                     Товар
                 </th>
-                <th>
+                <th class="w-20">
                     Цена
                 </th>
                 <th></th>
@@ -23,14 +30,14 @@ else
             @foreach (var item in Model.Lines())
             {
                 <tr>
-                    <td>
+                    <td class="w-60">
                         @item.Gadget.Name
                     </td>
-                    <td>
+                    <td class="w-20">
                         @item.Count x @item.Gadget.Price
                     </td>
                     <td>
-                        <a asp-action="Remove" asp-route-id="@item.Gadget.Id">Убрать</a>
+                        <a class="btn btn-link nondecoration" asp-action="Remove" asp-route-id="@item.Gadget.Id">Убрать</a>
                     </td>
                 </tr>
             }
@@ -38,18 +45,18 @@ else
         </tbody>
         <tfoot>
             <tr>
-                <td class="text-right">
-                    Итого:
+                <td >
+                    
                 </td>
                 <td>
-                    @Model.GetSum()
+                    Итого: @Model.GetSum()
                 </td>
             </tr>
         </tfoot>
     </table>
 
     <div class="row justify-content-center">
-        <a type="button" asp-controller="MyCart" asp-action="Delivery" class="btn buy-btn"> Оплатить </a>
+        <a type="button" asp-controller="MyCart" asp-action="Delivery" class="btn btn-outline-info"> Оплатить </a>
     </div>
 
 }

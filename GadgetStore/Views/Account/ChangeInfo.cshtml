@@ -1,0 +1,21 @@
+﻿@model bool
+
+<div class="text-center logo">
+    <h1 class="display-4">Личный кабинет</h1>
+</div>
+<div class="container content">
+    <div class="row justify-content-center pt-5">
+        @if (Model)
+        {
+            <span> Данные изменены! </span>
+
+        }
+        else
+        {
+            <span class="text-danger"> Что-то пошло не так... </span>
+        }
+    </div>
+    <div class="row justify-content-center pb-5">
+        <a class="btn btn-link nondecoration" asp-action="PrivateRoom">Назад</a>
+    </div>
+</div>

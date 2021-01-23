@@ -1,57 +1,64 @@
 ﻿@model IEnumerable<GadgetStore.Models.Order>
 
-@{
-    ViewData["Title"] = "Index";
+<div class="text-center logo">
+    <h1 class="display-4">Мои заказы</h1>
+</div>
+
+@if (Model.Count() == 0)
+{
+    <div class="row justify-content-center content h-100">
+        <span>Ваша история заказов пуста</span>
+    </div>
 }
-
-<h5 class="display-4 pb-3">Ваши заказы</h5>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Номер заказа
-            </th>
-            <th>
-                Товар
-            </th>
-            <th>
-                Дата заказа
-            </th>
-            <th>
-                Состояние
-            </th>
-            <th>
-
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+else
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @item.Id
-                </td>
-                <td>
-                    @foreach(CartLine cart in item.GetCartObject().Lines())
-                    {
-                        <p>@cart.Count x @cart.Gadget.Name</p>
-                    }
-                </td>
-                <td>
-                    @item.StartDate.ToShortDateString()
-                </td>
-                <td>
-                    @item.OrderStatus.Name
-                </td>
-                <td>
-                    @if (item.OrderStatusId == 2)
-                    {
-                        <a class="btn btn-sm btn-info" asp-action="OrderArrived" asp-route-id="@item.Id">Подтвердить получение</a>
-                    }
-                </td>
+                <th>
+                    Номер заказа
+                </th>
+                <th>
+                    Товар
+                </th>
+                <th>
+                    Дата заказа
+                </th>
+                <th>
+                    Состояние
+                </th>
+                <th>
+
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @foreach (CartLine cart in item.GetCartObject().Lines())
+                        {
+                            <p>@cart.Count x @cart.Gadget.Name</p>
+                        }
+                    </td>
+                    <td>
+                        @item.StartDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @item.OrderStatus.Name
+                    </td>
+                    <td>
+                        @if (item.OrderStatusId == 2)
+                        {
+                            <a class="btn btn-sm btn-info" asp-action="OrderArrived" asp-route-id="@item.Id">Подтвердить получение</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

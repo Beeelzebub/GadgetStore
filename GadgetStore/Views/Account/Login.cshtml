@@ -1,24 +1,28 @@
 ﻿@model GadgetStore.ViewModels.LoginViewModel
 
-<h2>Вход в приложение</h2>
-<hr />
+<div class="text-center logo">
+    <h1 class="display-4">Вход в приложение</h1>
+</div>
+
 <div class="row justify-content-center">
-    <div class="col-md-3">
+    <div class="col-md-3 text-center content pt-5">
         <form method="post" asp-controller="Account" asp-action="Login"
               asp-route-returnUrl="@Model.ReturnUrl">
-            <div asp-validation-summary="ModelOnly"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label><br />
-                <input asp-for="UserName" class="form-control" />
+                <label asp-for="UserName" class="control-label font-weight-light mb-0"></label><br />
+                <input asp-for="UserName" class="form-control smoth-border form-control-sm" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
-            <div class="form-group mb-5">
-                <label asp-for="Password" class="control-label"></label><br />
-                <input asp-for="Password" class="form-control" />
+            <div class="form-group mb-0">
+                <label asp-for="Password" class="control-label font-weight-light mb-0"></label><br />
+                <input asp-for="Password" class="form-control smoth-border form-control-sm" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <div>
-                <input type="submit" value="Войти" class="btn" />
+            <div class="row justify-content-center pt-5 pb-5">
+                <div class="col-5">
+                    <input type="submit" value="Войти" class="btn btn-block btn-outline-info btn-sm" />
+                </div>
             </div>
         </form>
     </div>

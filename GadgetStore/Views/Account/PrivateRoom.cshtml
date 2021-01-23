@@ -1,17 +1,14 @@
-﻿@model GadgetStore.ViewModels.EditUserViewModel
+﻿@model GadgetStore.ViewModels.PersonalEditUserViewModel
 
 <div class="text-center logo">
-    <h1 class="display-4">Редактирование пользователя</h1>
+    <h1 class="display-4">Личный кабинет</h1>
 </div>
 
 <div class="row justify-content-center">
     <div class="col-md-4 text-center content pt-3">
-        <form asp-action="Edit" asp-controller="Users">
+        <form asp-action="PrivateRoom" asp-controller="Account">
             <div class="row justify-content-center">
                 <div class="col-9">
-                    <div class="form-group">
-                        <input type="hidden" asp-for="Id" />
-                    </div>
                     <div class="form-group">
                         <label class="control-label font-weight-light mb-0"> Имя </label>
                         <input asp-for="FirstName" class="form-control smoth-border form-control-sm" />
@@ -21,10 +18,6 @@
                         <label class="control-label font-weight-light mb-0"> Фамилия </label>
                         <input asp-for="SecondName" class="form-control smoth-border form-control-sm" />
                         <span asp-validation-for="SecondName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label font-weight-light mb-0"> Роль </label>
-                        <select asp-for="Role" class="smoth-border form-control form-control-sm" asp-items="ViewBag.Roles"></select>
                     </div>
                     <div class="form-group">
                         <label class="control-label font-weight-light mb-0"> Логин </label>
@@ -44,5 +37,10 @@
                 </div>
             </div>
         </form>
+        <div class="row justify-content-center pt-3 pb-5">
+            <div class="col-5 pt-3 pb-3">
+                <a asp-controller="Account" asp-action="Logout" class="btn btn-block btn-outline-danger btn-sm">Выход</a>
+            </div>
+        </div>
     </div>
 </div>

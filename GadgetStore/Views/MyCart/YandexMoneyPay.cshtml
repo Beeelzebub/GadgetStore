@@ -1,1 +1,54 @@
-﻿
+﻿<div class="text-center logo">
+    <h1 class="display-4">GadgetStore</h1>
+    <h4 class="h4 logo-bottom">Онлайн магазин гаджетов</h4>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <strong>Яндекс Деньги</strong>
+                <small>Введите детали платежа</small>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="ccnumber">Номер кошелька</label>
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Введите номер кошелька" autocomplete="email">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        Я
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="name">Платёжный пароль</label>
+                            <input class="form-control" id="name" type="text" placeholder="Введите код для платежа">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row justify-content-between">
+                    <div class="col-3">
+                        <a asp-action="Delivery" class="btn btn-sm btn-block btn-danger" type="reset">
+                            Отмена
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a asp-action="Pay" class="btn btn-sm btn-success btn-block" type="submit">
+                            Оплатить
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

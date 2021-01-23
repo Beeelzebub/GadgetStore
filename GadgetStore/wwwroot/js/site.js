@@ -1,6 +1,6 @@
 ﻿function putInCart(id)
 {
-    $.get('MyCart/Add', { Id: id }, function(data) {
+    $.get('/MyCart/Add', { Id: id }, function(data) {
         $('#modal-info').html(data);
         $('#smallModal').modal({
             show: true

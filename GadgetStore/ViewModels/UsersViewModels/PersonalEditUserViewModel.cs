@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace GadgetStore.ViewModels
 {
-    public class LoginViewModel
+    public class PersonalEditUserViewModel
     {
-        [Required(ErrorMessage = "Поле должно быть заполнено")]
+
+        [Display(Name = "Имя")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Фамилия")]
+        public string SecondName { get; set; }
+
         [Display(Name = "Логин")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Поле должно быть заполнено")]
-        [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
-        public string ReturnUrl { get; set; }
     }
 }

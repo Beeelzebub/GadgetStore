@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<GadgetStore.Models.Gadget>
 
+    <div class="text-center logo">
+        <h1 class="display-4">GadgetStore</h1>
+        <h4 class="h4 logo-bottom">Онлайн магазин гаджетов</h4>
+    </div>
 
 <div class="input-group mb-4">
-    <input id="searachString" type="search" placeholder="Введите название товара" aria-describedby="button-addon5" class="smoth-border form-control">
+    <input id="searachString" type="search" placeholder="Введите название товара" onchange="search()" aria-describedby="button-addon5" class="smoth-border form-control">
     <div class="input-group-append">
         <button id="button-addon5" type="submit" class="smoth-border btn my-btn"
                 onclick="search()">
@@ -90,10 +94,10 @@
                             <strong class="text-center">@item.Price р. </strong>
                         </div>
                         <div class="row justify-content-center">
-                            <a class="btn btn-sm buy-btn align-self-center"
+                            <button class="btn btn-outline-info btn-sm align-self-center"
                                onclick="putInCart(@item.Id)">
                                 В корзину
-                            </a>
+                            </button>
                         </div>
                     }
                 </div>

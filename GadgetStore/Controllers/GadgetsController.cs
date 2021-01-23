@@ -9,6 +9,7 @@ using GadgetStore.Data;
 using GadgetStore.Models;
 using GadgetStore.ViewModels;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GadgetStore.Controllers
 {
@@ -93,6 +94,7 @@ namespace GadgetStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "seller")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(GadgetViewModel model)
         {
@@ -235,6 +237,8 @@ namespace GadgetStore.Controllers
             return PartialView("Assortment", gadgets);
         }
 
+
+        [Authorize(Roles = "seller")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -338,6 +342,7 @@ namespace GadgetStore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "seller")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? Id, GadgetViewModel model)
         {
@@ -361,8 +366,6 @@ namespace GadgetStore.Controllers
                     picture = new Picture { Image = imageData };
                     _context.Pictures.Add(picture);
                 }
-
-                
 
                 CPU cpu = await _context.CPUs
                     .Where(c => c.Name.ToLower() == model.CPU.ToLower())
@@ -429,7 +432,6 @@ namespace GadgetStore.Controllers
                     await _context.Manufacturers.AddAsync(manufacturer);
                 }
 
-
                 await _context.SaveChangesAsync();
 
                 Gadget gadget = await _context.Gadgets.FindAsync(Id);
@@ -477,6 +479,8 @@ namespace GadgetStore.Controllers
             return View(model);
         }
 
+
+        [Authorize(Roles = "seller")]
         public async Task<IActionResult> Management()
         {
             var gadgets = await _context.Gadgets
@@ -489,10 +493,11 @@ namespace GadgetStore.Controllers
                 .Include(g => g.ScreenResolution)
                 .ToListAsync();
 
-
             return View(gadgets);
         }
 
+
+        [Authorize(Roles = "seller")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

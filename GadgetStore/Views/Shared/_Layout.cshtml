@@ -20,9 +20,6 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Gadgets" asp-action="Index">Магазин</a>
                         </li>
                         <li class="nav-item">
@@ -32,6 +29,9 @@
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav">
+                        <li class="navbar-item">
+                            <a asp-controller="MyCart" asp-action="Index" class="nav-link pr-3"><i class="fa fa-shopping-cart"></i> Корзина</a>
+                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (User.IsInRole("admin"))
@@ -49,23 +49,16 @@
                             <li class="nav-item">
                                 <a class="nav-link pr-2" asp-area="" asp-controller="Orders" asp-action="MyOrders"><i class="fa fa-truck"> </i> Заказы</a>
                             </li>
+
                             <li class="navbar-item">
-                                <a asp-controller="MyCart" asp-action="Index" class="nav-link pr-3"><i class="fa fa-shopping-cart"></i> Корзина</a>
-                            </li>
-                            <li class="navbar-item">
-                                <span class="navbar-text"><i class="fa fa-user"></i> @User.Identity.Name /</span>
-                            </li>
-                            <li class="navbar-item">
-                                <form method="post" asp-controller="Account" asp-action="Logout">
-                                    <button class="btn btn-link nav-link pl-1"> Выход </button>
-                                </form>
+                                <a asp-controller="Account" asp-action="PrivateRoom" class="nav-link"><i class="fa fa-user"></i> @User.Identity.Name</a>
                             </li>
                         }
                         else
                         {
                             <li class="navbar-item">
-                                <a asp-controller="Account" asp-action="Login">
-                                    <button class="btn btn-outline-primary my-2 my-sm-0">Вход</button>
+                                <a class="btn btn-outline-info my-2 my-sm-0" asp-controller="Account" asp-action="Login">
+                                    Вход
                                 </a>
                             </li>
                             <li class="navbar-item">
@@ -78,11 +71,6 @@
             </div>
         </nav>
     </header>
-
-    <div class="text-center logo">
-        <h1 class="display-4">GadgetStore</h1>
-        <h4 class="h4 logo-bottom">Онлайн магазин гаджетов</h4>
-    </div>
 
     <div class="container">
         <main role="main" class="pb-3">

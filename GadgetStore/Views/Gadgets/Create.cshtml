@@ -1,91 +1,95 @@
 ﻿@model GadgetStore.ViewModels.GadgetViewModel
 
-@{
-    ViewData["Title"] = "Create";
-}
+<div class="text-center logo">
+    <h1 class="display-4">Добавление товара</h1>
+</div>
 
-<h1>Create</h1>
-
-<h4>Gadget</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center">
+    <div class="col-md-4 text-center content pt-3">
         <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="GadgetTypeId" class="control-label"></label>
-                <select asp-for="GadgetTypeId" class="form-control" asp-items="ViewBag.GadgetTypeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Year" class="control-label"></label>
-                <input asp-for="Year" class="form-control" />
-                <span asp-validation-for="Year" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Count" class="control-label"></label>
-                <input asp-for="Count" class="form-control" />
-                <span asp-validation-for="Count" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Memory" class="control-label"></label>
-                <input asp-for="Memory" class="form-control" />
-                <span asp-validation-for="Memory" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RAM" class="control-label"></label>
-                <input asp-for="RAM" class="form-control" />
-                <span asp-validation-for="RAM" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Diagonal" class="control-label"></label>
-                <input asp-for="Diagonal" list="Diagonals" class="form-control" />
-                <span asp-validation-for="Diagonal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ScreenResolution" class="control-label"></label>
-                <input asp-for="ScreenResolution" list="ScreenResolutions" class="form-control" />
-                <span asp-validation-for="ScreenResolution" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Color" class="control-label"></label>
-                <input asp-for="Color" list="Colors" class="form-control" />
-                <span asp-validation-for="Color" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CPU" class="control-label"></label>
-                <input asp-for="CPU" list="CPUs" class="form-control" />
-                <span asp-validation-for="CPU" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Manufacturer" class="control-label"></label>
-                <input asp-for="Manufacturer" list="Manufacturers" class="form-control" />
-                <span asp-validation-for="Manufacturer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label">Изображение</label>
-                <input name="Image" type="file" class="form-control" />
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="row justify-content-center">
+                <div class="col-9">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="GadgetTypeId" class="control-label font-weight-light mb-0"></label>
+                        <select asp-for="GadgetTypeId" class="smoth-border form-control form-control-sm" asp-items="ViewBag.GadgetTypeId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Name" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Year" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Year" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="Year" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Count" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Count" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="Count" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Memory" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Memory" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="Memory" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RAM" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="RAM" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="RAM" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Diagonal" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Diagonal" list="Diagonals" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="Diagonal" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ScreenResolution" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="ScreenResolution" list="ScreenResolutions" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="ScreenResolution" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Color" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Color" list="Colors" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="Color" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CPU" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="CPU" list="CPUs" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="CPU" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Manufacturer" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Manufacturer" list="Manufacturers" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="Manufacturer" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Price" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Image" class="control-label font-weight-light mb-0">Изображение</label>
+                        <input name="Image" type="file" class="form-control smoth-border form-control-sm" />
+                    </div>
+                    <div class="row w-100 justify-content-center pt-3 m-0">
+                        <div class="col-5">
+                            <input type="submit" value="Добавить" class="btn btn-block btn-outline-info btn-sm" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
+        <div class="pb-5">
+            <a class="btn btn-link nondecoration" asp-action="Management">Назад</a>
+        </div>
     </div>
 </div>
 
 <datalist id="Manufacturers">
-    @{ 
-        foreach(var item in ViewBag.Manufacturers)
+    @{
+        foreach (var item in ViewBag.Manufacturers)
         {
             <option value="@item"></option>
         }
@@ -127,13 +131,6 @@
         }
     }
 </datalist>
-
-
-
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

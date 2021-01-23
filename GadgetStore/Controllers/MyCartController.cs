@@ -23,6 +23,7 @@ namespace GadgetStore.Controllers
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Delivery()
         {
             Address address = HttpContext.Session.Get<Address>("address");
@@ -46,6 +47,7 @@ namespace GadgetStore.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Delivery(DelivaryViewModel model)
         {
             if (ModelState.IsValid)
@@ -79,6 +81,7 @@ namespace GadgetStore.Controllers
             return View(model);
         }
 
+        [Authorize]
         public async Task<IActionResult> Pay()
         {
             Cart cart = HttpContext.Session.Get<Cart>("cart");

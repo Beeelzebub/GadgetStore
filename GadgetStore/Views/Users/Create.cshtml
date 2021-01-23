@@ -1,42 +1,44 @@
 ﻿@model GadgetStore.ViewModels.CreateUserViewModel
 
-@{
-    ViewBag.Title = "Редактирование пользователя";
-}
-
-<form asp-action="Create" asp-controller="Users">
-
-    <div class="row justify-content-center">
-        <div class="col-6">
-            <div class="form-group col-6 text-center">
-                <label class="control-label font-weight-light mb-0"> Имя </label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+<div class="text-center logo">
+    <h1 class="display-4">Новый пользователь</h1>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-4 text-center content pt-3">
+        <form asp-action="Create" asp-controller="Users">
+            <div class="row justify-content-center">
+                <div class="col-9">
+                    <div class="form-group">
+                        <label class="control-label font-weight-light mb-0"> Имя </label>
+                        <input asp-for="FirstName" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-light mb-0"> Фамилия </label>
+                        <input asp-for="SecondName" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="SecondName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-light mb-0"> Роль </label>
+                        <select asp-for="Role" class="smoth-border form-control form-control-sm" asp-items="ViewBag.Roles"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-light mb-0"> Логин </label>
+                        <input asp-for="UserName" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-light mb-0"> Пароль </label>
+                        <input asp-for="Password" class="form-control smoth-border form-control-sm" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group col-6 text-center">
-                <label class="control-label font-weight-light mb-0"> Фамилия </label>
-                <input asp-for="SecondName" class="form-control" />
-                <span asp-validation-for="SecondName" class="text-danger"></span>
+            <div class="row w-100 justify-content-center pt-3 pb-5">
+                <div class="col-5">
+                    <input type="submit" value="Добавить" class="btn btn-block btn-outline-info btn-sm" />
+                </div>
             </div>
-            <div class="form-group col-6 text-center">
-                <label class="control-label font-weight-light mb-0"> Роль </label>
-                <select asp-for="Role" class="smoth-border form-control form-control-sm" asp-items="ViewBag.Roles"></select>
-            </div>
-            <div class="form-group col-6 text-center">
-                <label class="control-label font-weight-light mb-0"> Логин </label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6 text-center">
-                <label class="control-label font-weight-light mb-0"> Пароль </label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-        </div>
+        </form>
     </div>
-
-    <div class="form-group">
-        <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
-    </div>
-
-</form>
+</div>

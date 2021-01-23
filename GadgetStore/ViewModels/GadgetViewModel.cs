@@ -10,40 +10,52 @@ namespace GadgetStore.ViewModels
 {
     public class GadgetViewModel
     {
-        [Required]
+        [Display(Name = "Название")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public string Name { get; set; }
 
-        [Required]
+        [Display(Name = "Тип")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public int GadgetTypeId { get; set; }
 
-        [Required]
+        [Display(Name = "Год выпуска")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public int Year { get; set; }
 
-        [Required]
+        [Display(Name = "Цена")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public float Price { get; set; }
 
-        [Required]
+        [Display(Name = "Количество")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public int Count { get; set; }
 
-        [Required]
+        [Display(Name = "Флэш память")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public string Memory { get; set; }
 
-        [Required]
+        [Display(Name = "Оперативная память")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public string RAM { get; set; }
 
-        [Required]
+        [Display(Name = "Диагональ")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public string Diagonal { get; set; }
 
-        [Required]
+        [Display(Name = "Разрешение")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public string ScreenResolution { get; set; }
 
-        [Required]
+        [Display(Name = "Цвет")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public string Color { get; set; }
 
-        [Required]
+        [Display(Name = "Процессор")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public string CPU { get; set; }
 
-        [Required]
+        [Display(Name = "Производитель")]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         public string Manufacturer { get; set; }
 
         public IFormFile Image { get; set; }

@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<GadgetStore.Models.User>
-@{
-    ViewBag.Title = "Список пользователей";
-}
+    <div class="text-center logo">
+        <h1 class="display-4">Управление пользователями</h1>
+    </div>
 
-<a asp-action="Create"><i class="fa fa-plus nondecoration"></i>Добавить пользователя</a>
+<a class="ml-3 nondecoration" asp-action="Create"><i class="fa fa-plus"></i>Добавить пользователя</a>
 
 <table class="table">
     <tr><th>Логин</th><th>Имя и Фамилия</th><th></th></tr>

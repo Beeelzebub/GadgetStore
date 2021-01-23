@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using GadgetStore.Models;
 using GadgetStore.ViewModels;
 using GadgetStore.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GadgetStore.Controllers
 {
@@ -22,51 +23,46 @@ namespace GadgetStore.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> ChangeLogin(string newLogin)
+
+        
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> PrivateRoom(PersonalEditUserViewModel model)
+        {
+            User user = await _userManager.GetUserAsync(User);
+            user.FirstName = model.FirstName;
+            user.SecondName = model.SecondName;
+            user.UserName = model.UserName;
+
+            if (model.Password != null)
+            {
+                await _userManager.RemovePasswordAsync(user);
+                await _userManager.AddPasswordAsync(user, model.Password);
+            }
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return View("ChangeInfo", true);
+            }
+
+            return View("ChangeInfo", false);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> PrivateRoom()
         {
             User user = await _userManager.GetUserAsync(User);
 
-            if (user == null)
+            PersonalEditUserViewModel model = new PersonalEditUserViewModel
             {
-                return NotFound();
-            }
+                FirstName = user.FirstName,
+                SecondName = user.SecondName,
+                UserName = user.UserName
+            };
 
-            user.UserName = newLogin;
-
-            var updateResult = await _userManager.UpdateAsync(user);
-
-            if (updateResult.Succeeded)
-            {
-                return View("ChangeLoginInfo", true);
-            }
-
-            return View("ChangeLoginInfo", false);
-        }
-
-        public async Task<IActionResult> ChangePassword(string newPass)
-        {
-            User user = await _userManager.GetUserAsync(User);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            await _userManager.RemovePasswordAsync(user);
-
-            var updateResult = await _userManager.AddPasswordAsync(user, newPass);
-
-            if (updateResult.Succeeded)
-            {
-                return View("ChangePasswordInfo", true);
-            }
-
-            return View("ChangePasswordInfo", false);
-        }
-
-        public async Task<IActionResult> MyAccount(RegisterViewModel model)
-        {
-            return View();
+            return View(model);
         }
 
         [HttpGet]
@@ -140,8 +136,6 @@ namespace GadgetStore.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

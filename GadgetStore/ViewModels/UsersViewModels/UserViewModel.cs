@@ -9,19 +9,19 @@ namespace GadgetStore.ViewModels
     public class UserViewModel
     {
 
-        [Required]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         [Display(Name = "Роль")]
         public string Role { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         [Display(Name = "Фамилия")]
         public string SecondName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Поле должно быть заполнено")]
         [Display(Name = "Логин")]
         public string UserName { get; set; }
     }

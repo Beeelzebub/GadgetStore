@@ -1,66 +1,71 @@
 ﻿@model GadgetStore.ViewModels.DelivaryViewModel
 
-@{
-    ViewData["Title"] = "Delivery";
-}
+<div class="text-center logo">
+    <h1 class="display-4">Доставка</h1>
+</div>
 
-<h1>Delivery</h1>
-
-<h4>Address</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center">
+    <div class="col-md-5 text-center content pt-5">
         <form asp-action="Delivery">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" />
-                <span asp-validation-for="Street" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Hous" class="control-label"></label>
-                <input asp-for="Hous" class="form-control" />
-                <span asp-validation-for="Hous" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Porch" class="control-label"></label>
-                <input asp-for="Porch" class="form-control" />
-                <span asp-validation-for="Porch" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Apartment" class="control-label"></label>
-                <input asp-for="Apartment" class="form-control" />
-                <span asp-validation-for="Apartment" class="text-danger"></span>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="PayType" id="PayType1" value="1">
-                <label class="form-check-label" for="PayType1">Банковская карта</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="PayType" id="PayType2" value="2">
-                <label class="form-check-label" for="PayType2">Яндекс Деньги</label>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="row justify-content-center">
+                <div class="col-9">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="PhoneNumber" class="smoth-border form-control form-control-sm" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="City" class="smoth-border form-control form-control-sm" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Street" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Street" class="smoth-border form-control form-control-sm" />
+                        <span asp-validation-for="Street" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Hous" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Hous" class="smoth-border form-control form-control-sm" />
+                        <span asp-validation-for="Hous" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Porch" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Porch" class="smoth-border form-control form-control-sm" />
+                        <span asp-validation-for="Porch" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Apartment" class="control-label font-weight-light mb-0"></label>
+                        <input asp-for="Apartment" class="smoth-border form-control form-control-sm" />
+                        <span asp-validation-for="Apartment" class="text-danger"></span>
+                    </div>
+                    <label class="control-label font-weight-light">Способ оплаты</label>
+                    <div class="row justify-content-between">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="PayType" id="PayType1" value="1">
+                            <label class="form-check-label" for="PayType1">Банковская карта</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="PayType" id="PayType2" value="2">
+                            <label class="form-check-label" for="PayType2">Яндекс Деньги</label>
+                        </div>
+                    </div>
+                    <div class="row w-100 justify-content-center pt-5 m-0">
+                        <div class="col-5">
+                            <input type="submit" value="Продолжить" class="btn btn-block btn-outline-info btn-sm" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
+        <div>
+            <a class="btn btn-link nondecoration pb-5" asp-controller="MyCart" asp-action="Index">Отмена</a>
+        </div>
+
     </div>
 </div>
 
-<div>
-    <a asp-controller="MyCart" asp-action="Index">Отмена</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -10,9 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GadgetStore.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
